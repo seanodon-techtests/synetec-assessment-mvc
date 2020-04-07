@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynetecMvcAssessment", "SynetecMvcAssessment\SynetecMvcAssessment.csproj", "{ADB94C4B-2A3E-4F85-A015-389E5DAA3904}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynetecMvcAssessment.Services", "SynetecMvcAssessment.Services\SynetecMvcAssessment.Services.csproj", "{75E28129-123C-4D0D-B0FE-BFACD601CB26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynetecMvcAssessment.Data", "SynetecMvcAssessment.Data\SynetecMvcAssessment.Data.csproj", "{725DF0BA-C8A9-43E7-AA7C-FCDC9F0E949F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{ADB94C4B-2A3E-4F85-A015-389E5DAA3904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADB94C4B-2A3E-4F85-A015-389E5DAA3904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADB94C4B-2A3E-4F85-A015-389E5DAA3904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E28129-123C-4D0D-B0FE-BFACD601CB26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E28129-123C-4D0D-B0FE-BFACD601CB26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E28129-123C-4D0D-B0FE-BFACD601CB26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E28129-123C-4D0D-B0FE-BFACD601CB26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{725DF0BA-C8A9-43E7-AA7C-FCDC9F0E949F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{725DF0BA-C8A9-43E7-AA7C-FCDC9F0E949F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{725DF0BA-C8A9-43E7-AA7C-FCDC9F0E949F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{725DF0BA-C8A9-43E7-AA7C-FCDC9F0E949F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

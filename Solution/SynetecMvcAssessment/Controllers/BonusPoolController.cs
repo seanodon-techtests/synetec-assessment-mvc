@@ -1,56 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
-using InterviewTestTemplatev2.Data;
 using InterviewTestTemplatev2.Models;
-
+using SynetecMvcAssessment.Services;
 
 namespace InterviewTestTemplatev2.Controllers
 {
-    public class BonusPoolController : Controller
-    {
+	public class BonusPoolController : Controller
+	{
+		private readonly IBonusCalculator _bonusCalculator;
+		private readonly IEmployeeService _employeeService;
 
-        private MvcInterviewV3Entities1 db = new MvcInterviewV3Entities1();
+		public BonusPoolController(IEmployeeService employeeService, IBonusCalculator bonusCalculator)
+		{
+			_employeeService = employeeService;
+			_bonusCalculator = bonusCalculator;
+		}
 
-        // GET: BonusPool
-        public ActionResult Index()
-        {
-            BonusPoolCalculatorModel model = new BonusPoolCalculatorModel();
+		// GET: BonusPool
+		public async Task<ActionResult> Index()
+		{
+			var allEmployees = await _employeeService.GetAllEmployeesAsync();
 
-            model.AllEmployees = db.HrEmployees.ToList<HrEmployee>();
-            
-            return View(model);
-        }
+			var model = new BonusPoolCalculatorModel {AllEmployees = allEmployees};
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Calculate(BonusPoolCalculatorModel model)
-        {
+			return View(model);
+		}
 
-            
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<ActionResult> Calculate(BonusPoolCalculatorModel model)
+		{
+			var selectedEmployeeId = model.SelectedEmployeeId;
+			var totalBonusPool = model.BonusPoolAmount;
 
-            int selectedEmployeeId = model.SelectedEmployeeId;
-            int totalBonusPool = model.BonusPoolAmount;
+			var hrEmployee = await _employeeService.GetEmployeeByIdAsync(selectedEmployeeId);
 
-            //load the details of the selected employee using the ID
-            HrEmployee hrEmployee = (HrEmployee)db.HrEmployees.FirstOrDefault(item => item.ID == selectedEmployeeId);
-            
-            int employeeSalary = hrEmployee.Salary;
+			var result = new BonusPoolCalculatorResultModel
+			{
+				HrEmployee = hrEmployee,
+				BonusPoolAllocation = await CalculateBonusForEmployee(hrEmployee.Salary, totalBonusPool)
+			};
 
-            //get the total salary budget for the company
-            int totalSalary = (int)db.HrEmployees.Sum(item => item.Salary);
+			return View(result);
+		}
 
-            //calculate the bonus allocation for the employee
-            decimal bonusPercentage = (decimal)employeeSalary / (decimal)totalSalary;
-            int bonusAllocation = (int)(bonusPercentage * totalBonusPool);
+		private async Task<decimal> CalculateBonusForEmployee(int employeeSalary, int bonusPoolAmount)
+		{
+			var totalSalary = await _employeeService.GetTotalSalaryOfAllEmployees();
 
-            BonusPoolCalculatorResultModel result = new BonusPoolCalculatorResultModel();
-            result.hrEmployee = hrEmployee;
-            result.bonusPoolAllocation = bonusAllocation;
-            
-            return View(result);
-        }
-    }
+			return _bonusCalculator.GetBonusForEmployee(employeeSalary, totalSalary, bonusPoolAmount);
+		}
+	}
 }

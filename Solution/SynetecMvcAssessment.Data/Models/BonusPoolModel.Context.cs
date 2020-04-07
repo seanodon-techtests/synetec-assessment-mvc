@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace InterviewTestTemplatev2.Data
+namespace SynetecMvcAssessment.Data.Models
 {
     using System;
     using System.Data.Entity;
